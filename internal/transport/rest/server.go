@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 const (
@@ -43,6 +44,8 @@ func (s *Server) makeHTTPServer(address string, port int) *http.Server {
 
 func (s *Server) routes() chi.Router {
 	r := chi.NewRouter()
+
+	r.Use(middleware.Logger)
 
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
