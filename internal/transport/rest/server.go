@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/go-chi/chi/v5"
 )
 
 const (
@@ -31,9 +33,22 @@ func (s *Server) Stop(ctx context.Context) error {
 func (s *Server) makeHTTPServer(address string, port int) *http.Server {
 	return &http.Server{
 		Addr:           fmt.Sprintf("%s:%d", address, port),
+		Handler:        s.routes(),
 		MaxHeaderBytes: maxHeaderBytes,
 		IdleTimeout:    idleTimeout,
 		ReadTimeout:    readTimeout,
 		WriteTimeout:   writeTimeout,
 	}
+}
+
+func (s *Server) routes() chi.Router {
+	r := chi.NewRouter()
+
+	r.Route("/api/v1", func(r chi.Router) {
+		r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte("pong"))
+		})
+	})
+
+	return r
 }
