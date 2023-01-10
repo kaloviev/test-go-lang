@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/alsolovyev/dummy-api/internal/transport/rest"
+	"github.com/alsolovyev/dummy-api/internal/transport/rest/handler"
 )
 
 const (
@@ -12,7 +13,9 @@ const (
 )
 
 func main() {
-	if err := new(rest.Server).Run(address, port); err != nil {
+	handler := new(handler.Handler)
+
+	if err := new(rest.Server).Run(address, port, handler.MakeRouter()); err != nil {
 		log.Fatalf("Error occured while running HTTP server: %s", err.Error())
 	}
 }
