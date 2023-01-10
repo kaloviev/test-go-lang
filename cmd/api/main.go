@@ -25,6 +25,6 @@ func main() {
 	handler := new(handler.Handler)
 
 	if err := new(rest.Server).Run(address, port, handler.MakeRouter()); err != nil {
-		log.Fatalf("Error occured while running HTTP server: %s", err.Error())
+		log.Fatalf("Error occurred while running HTTP server: %s", err.Error())
 	}
 }
