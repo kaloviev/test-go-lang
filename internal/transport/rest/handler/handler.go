@@ -16,6 +16,8 @@ func (h *Handler) MakeRouter() chi.Router {
 
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Get("/ping", h.PingHandler)
+
+		r.Post("/user/create", h.CreateUser)
 	})
 
 	return r
