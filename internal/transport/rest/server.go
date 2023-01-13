@@ -18,23 +18,23 @@ type Server struct {
 	httpServer *http.Server
 }
 
-func (s *Server) Run(address string, port int, handler http.Handler) error {
-	s.httpServer = s.makeHTTPServer(address, port, handler)
+func MakeServer(address string, port int, handler http.Handler) *Server {
+	return &Server{
+		httpServer: &http.Server{
+			Addr:           fmt.Sprintf("%s:%d", address, port),
+			Handler:        handler,
+			MaxHeaderBytes: maxHeaderBytes,
+			IdleTimeout:    idleTimeout,
+			ReadTimeout:    readTimeout,
+			WriteTimeout:   writeTimeout,
+		},
+	}
+}
 
+func (s *Server) Run() error {
 	return s.httpServer.ListenAndServe()
 }
 
 func (s *Server) Stop(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
-}
-
-func (s *Server) makeHTTPServer(address string, port int, handler http.Handler) *http.Server {
-	return &http.Server{
-		Addr:           fmt.Sprintf("%s:%d", address, port),
-		Handler:        handler,
-		MaxHeaderBytes: maxHeaderBytes,
-		IdleTimeout:    idleTimeout,
-		ReadTimeout:    readTimeout,
-		WriteTimeout:   writeTimeout,
-	}
 }

@@ -23,8 +23,9 @@ func main() {
 	}
 
 	handler := new(handler.Handler)
+	server := rest.MakeServer(address, port, handler.MakeRouter())
 
-	if err := new(rest.Server).Run(address, port, handler.MakeRouter()); err != nil {
+	if err := server.Run(); err != nil {
 		log.Fatalf("Error occurred while running HTTP server: %s", err.Error())
 	}
 }
