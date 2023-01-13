@@ -5,8 +5,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-type Handler struct {
-}
+type Handler struct{}
 
 func New() *Handler {
 	return &Handler{}
