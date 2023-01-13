@@ -22,8 +22,8 @@ func main() {
 		log.Fatalf("Error occurred while creating repository: %s", err.Error())
 	}
 
-	handler := new(handler.Handler)
-	server := rest.MakeServer(address, port, handler.MakeRouter())
+	h := handler.New().MakeHandler()
+	server := rest.MakeServer(address, port, h)
 
 	if err := server.Run(); err != nil {
 		log.Fatalf("Error occurred while running HTTP server: %s", err.Error())

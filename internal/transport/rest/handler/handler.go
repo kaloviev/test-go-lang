@@ -8,7 +8,11 @@ import (
 type Handler struct {
 }
 
-func (h *Handler) MakeRouter() chi.Router {
+func New() *Handler {
+	return &Handler{}
+}
+
+func (h *Handler) MakeHandler() chi.Router {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
