@@ -1,13 +1,9 @@
 package service
 
-import "github.com/alsolovyev/dummy-api/internal/entity"
-
-type UserService interface {
-	Create(u *entity.User) error
-}
+import "github.com/alsolovyev/dummy-api/internal/transport/rest/handler"
 
 type Service struct {
-	User UserService
+	User handler.UserService
 }
 
 func New() *Service {
