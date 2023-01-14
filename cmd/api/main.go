@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/alsolovyev/dummy-api/internal/repository/sqlite"
+	"github.com/alsolovyev/dummy-api/internal/service"
 	"github.com/alsolovyev/dummy-api/internal/transport/rest"
 	"github.com/alsolovyev/dummy-api/internal/transport/rest/handler"
 )
@@ -22,7 +23,8 @@ func main() {
 		log.Fatalf("Error occurred while creating repository: %s", err.Error())
 	}
 
-	h := handler.New().MakeHandler()
+	s := service.New()
+	h := handler.New(s.User).MakeHandler()
 	server := rest.MakeServer(address, port, h)
 
 	if err := server.Run(); err != nil {

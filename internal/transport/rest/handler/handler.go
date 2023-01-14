@@ -1,14 +1,23 @@
 package handler
 
 import (
+	"github.com/alsolovyev/dummy-api/internal/entity"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-type Handler struct{}
+type UserService interface {
+	Create(u *entity.User) error
+}
 
-func New() *Handler {
-	return &Handler{}
+type Handler struct {
+	UserService
+}
+
+func New(u UserService) *Handler {
+	return &Handler{
+		UserService: u,
+	}
 }
 
 func (h *Handler) MakeHandler() chi.Router {
